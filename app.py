@@ -182,11 +182,18 @@ def show_header() -> None:
         """
         <div class="hero-band">
             <div class="hero-band-title">🔍 AutoInsight</div>
-            <div class="hero-band-subtitle">Upload. Analyze. Understand.</div>
+            <div class="hero-band-subtitle">Intelligent Data Analysis & Visualization Dashboard</div>
             <div class="hero-pills">
-                <div class="hero-pill">◉ Auto-detect</div>
-                <div class="hero-pill">◉ Clean + profile</div>
-                <div class="hero-pill">◉ Explore patterns</div>
+                <div class="hero-pill">⚡ Auto-detect columns</div>
+                <div class="hero-pill">🧹 Smart cleaning</div>
+                <div class="hero-pill">📊 Interactive charts</div>
+                <div class="hero-pill">🤖 ML clustering</div>
+                <div class="hero-pill">📥 Export reports</div>
+            </div>
+            <div class="badge-row" style="margin-top:1rem;">
+                <span class="badge badge-teal">DATATHON 2026</span>
+                <span class="badge badge-violet">Team AutoInsight</span>
+                <span class="badge badge-amber">v2.0</span>
             </div>
         </div>
         """,
@@ -276,34 +283,50 @@ def show_dataset_overview(df: pd.DataFrame, metadata: Optional[Dict[str, Any]] =
 
 
 def show_data_preview(df: pd.DataFrame) -> None:
-    """5️⃣ DATA PREVIEW: First few rows displayed using full container width."""
+    """5️⃣ DATA PREVIEW: First few rows with search/filter and schema."""
     st.markdown('<div class="section-header">📋 Dataset Preview</div>', unsafe_allow_html=True)
 
     if df.empty:
         st.info("The dataset has 0 records.")
         return
 
-    ctrl_col, info_col = st.columns([1, 3])
+    ctrl_col, search_col, info_col = st.columns([1, 2, 2])
     with ctrl_col:
         preview_rows = st.selectbox(
             "Rows to display",
-            options=[5, 10, 25, 50],
+            options=[5, 10, 25, 50, 100],
             index=0,
             label_visibility="collapsed",
             key="preview_rows_select",
         )
+    with search_col:
+        col_search = st.text_input(
+            "Search column",
+            placeholder="🔍 Filter columns by name…",
+            label_visibility="collapsed",
+            key="col_search_input",
+        )
     with info_col:
-        st.caption(f"Showing top {preview_rows} of {len(df):,} rows ({len(df.columns)} columns)")
+        st.caption(f"Showing top {preview_rows} of {len(df):,} rows · {len(df.columns)} columns")
 
-    st.dataframe(df.head(preview_rows), **_width_kwarg())
+    display_df = df.head(preview_rows)
+    if col_search.strip():
+        matched_cols = [c for c in display_df.columns if col_search.strip().lower() in c.lower()]
+        if matched_cols:
+            display_df = display_df[matched_cols]
+        else:
+            st.warning(f'No columns matching "{col_search}" found.')
+
+    st.dataframe(display_df, **_width_kwarg())
 
     with st.expander("🔍 Detailed Schema & Column Types", expanded=False):
         schema_df = pd.DataFrame({
             "Column": df.columns,
             "Type": [str(t) for t in df.dtypes],
             "Non-Null Count": [int(df[c].count()) for c in df.columns],
-            "Missing Count": [int(df[c].isnull().sum()) for c in df.columns],
+            "Missing %": [round(df[c].isnull().mean() * 100, 1) for c in df.columns],
             "Unique Count": [int(df[c].nunique()) for c in df.columns],
+            "Sample Value": [str(df[c].dropna().iloc[0]) if df[c].dropna().shape[0] > 0 else "—" for c in df.columns],
         })
         st.dataframe(schema_df, **_width_kwarg())
 
@@ -405,6 +428,196 @@ def display_charts(charts: Optional[List[go.Figure]] = None) -> None:
         for col, fig in zip(cols, pair):
             with col:
                 st.plotly_chart(fig, **_width_kwarg())
+
+
+def show_data_quality_gauge(score: float, missing: int, dupes: int, outliers: int) -> None:
+    """🎯 Animated data quality gauge with colour-coded score."""
+    st.markdown('<div class="section-header">🎯 Data Quality Score</div>', unsafe_allow_html=True)
+
+    if score >= 80:
+        color = "#00f5d4"
+        label = "Excellent"
+        emoji = "✅"
+    elif score >= 60:
+        color = "#fbbf24"
+        label = "Fair"
+        emoji = "⚠️"
+    else:
+        color = "#ef4444"
+        label = "Needs Attention"
+        emoji = "❌"
+
+    score_int = int(round(score))
+    q1, q2, q3, q4 = st.columns(4)
+    with q1:
+        st.markdown(
+            f"""
+            <div class="quality-gauge-wrap">
+                <div class="quality-score-number" style="color:{color}">{score_int}</div>
+                <div style="color:#64748b;font-size:0.75rem;font-weight:600;letter-spacing:0.06em;">/100</div>
+                <div class="quality-label-text" style="color:{color}">{emoji} {label}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with q2:
+        st.metric("Missing Values", f"{missing:,}", delta="✓ None" if missing == 0 else f"⚠ {missing}",
+                  delta_color="normal" if missing == 0 else "inverse")
+    with q3:
+        st.metric("Duplicate Rows", f"{dupes:,}", delta="✓ None" if dupes == 0 else f"⚠ {dupes}",
+                  delta_color="normal" if dupes == 0 else "inverse")
+    with q4:
+        st.metric("Outliers", f"{outliers:,}", delta="✓ None" if outliers == 0 else f"⚠ {outliers}",
+                  delta_color="normal" if outliers == 0 else "inverse")
+
+    st.progress(min(score_int, 100) / 100)
+
+
+def show_chart_builder(df: pd.DataFrame) -> None:
+    """📊 Interactive Chart Builder — user picks axes, chart type, color."""
+    st.markdown('<div class="section-header">🛠️ Interactive Chart Builder</div>', unsafe_allow_html=True)
+    st.markdown('<div class="chart-builder-card">', unsafe_allow_html=True)
+
+    all_cols = df.columns.tolist()
+    numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
+    cat_cols = df.select_dtypes(include=["object", "category"]).columns.tolist()
+
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        chart_type = st.selectbox(
+            "Chart Type",
+            ["Bar", "Line", "Scatter", "Histogram", "Box", "Violin", "Pie", "Area"],
+            key="cb_chart_type",
+        )
+    with c2:
+        x_col = st.selectbox("X Axis", all_cols, key="cb_x")
+    with c3:
+        y_options = numeric_cols if chart_type not in ["Histogram", "Pie"] else ["Count"]
+        y_col = st.selectbox("Y Axis / Value", y_options if y_options else all_cols, key="cb_y")
+    with c4:
+        color_col = st.selectbox("Color by (optional)", ["None"] + cat_cols, key="cb_color")
+
+    color_arg = color_col if color_col != "None" else None
+    palettes = ["Viridis", "Plasma", "Teal", "Purples", "Oranges", "Blues"]
+    palette_map = {
+        "Viridis": px.colors.sequential.Viridis,
+        "Plasma": px.colors.sequential.Plasma,
+        "Teal": ["#00f5d4", "#06b6d4", "#0891b2", "#0e7490"],
+        "Purples": px.colors.sequential.Purples,
+        "Oranges": px.colors.sequential.Oranges,
+        "Blues": px.colors.sequential.Blues,
+    }
+
+    p1, p2, p3 = st.columns([2, 2, 1])
+    with p1:
+        chosen_palette = st.selectbox("Color Palette", palettes, key="cb_palette")
+    with p2:
+        chart_title = st.text_input("Chart Title (optional)", placeholder="Enter chart title…", key="cb_title")
+    with p3:
+        st.markdown("<div style='height:28px'></div>", unsafe_allow_html=True)
+        build_btn = st.button("🚀 Build Chart", key="cb_build")
+
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    if build_btn or st.session_state.get("cb_last_built"):
+        st.session_state["cb_last_built"] = True
+        title = chart_title or f"{chart_type}: {x_col}"
+        color_seq = palette_map.get(chosen_palette, None)
+        common = dict(template="plotly_dark", height=420)
+        fig = None
+        try:
+            sample_df = df.head(2000)  # Cap rows for performance
+            if chart_type == "Bar":
+                if color_arg:
+                    fig = px.bar(sample_df, x=x_col, y=y_col, color=color_arg, title=title, **common)
+                else:
+                    fig = px.bar(sample_df, x=x_col, y=y_col, title=title, color_discrete_sequence=color_seq, **common)
+            elif chart_type == "Line":
+                fig = px.line(sample_df, x=x_col, y=y_col, color=color_arg, title=title, markers=True,
+                              color_discrete_sequence=color_seq, **common)
+            elif chart_type == "Scatter":
+                fig = px.scatter(sample_df, x=x_col, y=y_col, color=color_arg, title=title,
+                                 color_discrete_sequence=color_seq, **common)
+            elif chart_type == "Histogram":
+                fig = px.histogram(sample_df, x=x_col, color=color_arg, title=title, nbins=30,
+                                   color_discrete_sequence=color_seq, **common)
+            elif chart_type == "Box":
+                fig = px.box(sample_df, x=color_arg if color_arg else None, y=x_col if x_col in numeric_cols else y_col,
+                             title=title, color=color_arg, color_discrete_sequence=color_seq, **common)
+            elif chart_type == "Violin":
+                fig = px.violin(sample_df, x=color_arg, y=x_col if x_col in numeric_cols else y_col,
+                                color=color_arg, title=title, box=True, color_discrete_sequence=color_seq, **common)
+            elif chart_type == "Pie":
+                val_counts = sample_df[x_col].value_counts().head(12).reset_index()
+                val_counts.columns = [x_col, "Count"]
+                fig = px.pie(val_counts, names=x_col, values="Count", title=title,
+                             color_discrete_sequence=color_seq, **{k: v for k, v in common.items() if k != "height"})
+                fig.update_layout(height=420)
+            elif chart_type == "Area":
+                fig = px.area(sample_df, x=x_col, y=y_col, color=color_arg, title=title,
+                              color_discrete_sequence=color_seq, **common)
+            if fig:
+                fig.update_layout(
+                    paper_bgcolor="rgba(0,0,0,0)",
+                    plot_bgcolor="rgba(0,0,0,0)",
+                    font=dict(family="Inter", color="#f1f5f9"),
+                    margin=dict(l=20, r=20, t=50, b=20),
+                )
+                st.plotly_chart(fig, **_width_kwarg())
+        except Exception as e:
+            st.error(f"Chart error: {e}. Try different column selections.")
+
+
+def generate_text_report(
+    df: pd.DataFrame,
+    cleaning_report: Optional[Dict[str, Any]],
+    analysis_results: Optional[Dict[str, Any]],
+    quality_score: float,
+) -> str:
+    """Generate a plain-text/markdown report for download."""
+    lines = [
+        "# AutoInsight — Data Analysis Report",
+        f"Generated: {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M:%S')}",
+        "",
+        "## Dataset Summary",
+        f"- Rows: {len(df):,}",
+        f"- Columns: {len(df.columns)}",
+        f"- Data Quality Score: {int(round(quality_score))}/100",
+        f"- Missing Values: {int(df.isnull().sum().sum())}",
+        f"- Duplicate Rows: {int(df.duplicated().sum())}",
+        "",
+        "## Columns",
+    ]
+    for col in df.columns:
+        dtype = str(df[col].dtype)
+        missing = int(df[col].isnull().sum())
+        unique = int(df[col].nunique())
+        lines.append(f"- **{col}** ({dtype}) — {unique} unique, {missing} missing")
+
+    if cleaning_report:
+        lines += ["", "## Cleaning Actions"]
+        for a in cleaning_report.get("actions", []):
+            lines.append(f"- {a}")
+
+    if analysis_results:
+        corrs = analysis_results.get("correlations", [])
+        if corrs:
+            lines += ["", "## Strong Correlations"]
+            for c in corrs[:5]:
+                lines.append(f"- {c.get('col_a')} ↔ {c.get('col_b')}: {c.get('value')}")
+        outliers = analysis_results.get("outliers", {})
+        if outliers:
+            lines += ["", "## Outliers Detected"]
+            for col, cnt in outliers.items():
+                lines.append(f"- {col}: {cnt} outlier(s)")
+        insights = analysis_results.get("insights", [])
+        if insights:
+            lines += ["", "## Key Insights"]
+            for ins in insights:
+                lines.append(f"- {ins}")
+
+    lines += ["", "---", "*Generated by AutoInsight — DATATHON 2026*"]
+    return "\n".join(lines)
 
 
 def _compute_iqr_outlier_mask(series: pd.Series) -> pd.Series:
@@ -717,12 +930,29 @@ def display_dashboard(
         }
         clustering_result = perform_clustering(cleaned_df, col_types)
 
+    # Compute quality score for gauge
+    total_rows_ = len(cleaned_df)
+    total_cells_ = max(1, total_rows_ * len(cleaned_df.columns))
+    total_missing_ = int(cleaned_df.isnull().sum().sum())
+    total_dupes_ = int(cleaned_df.duplicated().sum())
+    total_outliers_ = 0
+    if clustering_result and analysis_results and isinstance(analysis_results.get("outliers"), dict):
+        total_outliers_ = int(sum(v for v in analysis_results["outliers"].values() if isinstance(v, (int, float))))
+    elif analysis_results and isinstance(analysis_results.get("outliers"), dict):
+        total_outliers_ = int(sum(v for v in analysis_results["outliers"].values() if isinstance(v, (int, float))))
+    missing_pct_ = (total_missing_ / total_cells_) * 100
+    dup_pct_ = (total_dupes_ / max(1, total_rows_)) * 100
+    out_pct_ = (total_outliers_ / max(1, total_rows_)) * 100
+    quality_score_ = max(0.0, min(100.0, 100 - missing_pct_ * 0.4 - dup_pct_ * 0.4 - out_pct_ * 0.2))
+
     # Tab-based layout
-    tab_dash, tab_ml, tab_quality, tab_preview = st.tabs([
+    tab_dash, tab_chart, tab_ml, tab_quality, tab_preview, tab_export = st.tabs([
         "📊 Dashboard",
+        "🛠️ Chart Builder",
         "🤖 ML & Insights",
         "🧹 Data Quality",
         "👀 Data Preview",
+        "📥 Export",
     ])
 
     with tab_dash:
@@ -730,9 +960,14 @@ def display_dashboard(
         if summary_paragraph:
             st.info(f"💡 **Dataset Overview & Key Findings:**\n\n{summary_paragraph}")
 
+        show_data_quality_gauge(quality_score_, total_missing_, total_dupes_, total_outliers_)
+        st.divider()
         show_visualizations(cleaned_df, charts, analysis_results)
         st.divider()
         show_insights(insights)
+
+    with tab_chart:
+        show_chart_builder(cleaned_df)
 
     with tab_ml:
         st.markdown('<div class="section-header">🔥 Correlations & Outliers</div>', unsafe_allow_html=True)
@@ -778,6 +1013,8 @@ def display_dashboard(
             st.info("Clustering module not available.")
 
     with tab_quality:
+        show_data_quality_gauge(quality_score_, total_missing_, total_dupes_, total_outliers_)
+        st.divider()
         show_cleaning_report(cleaning_report)
 
     with tab_preview:
@@ -811,14 +1048,49 @@ def display_dashboard(
         pills_html.append('</div>')
         st.markdown("".join(pills_html), unsafe_allow_html=True)
 
-        st.dataframe(cleaned_df, **_width_kwarg())
+        show_data_preview(cleaned_df)
+
         csv_bytes = cleaned_df.to_csv(index=False).encode("utf-8")
         st.download_button(
             label="⬇️ Download Cleaned CSV",
             data=csv_bytes,
             file_name="cleaned_data.csv",
             mime="text/csv",
+            key="download_csv_preview",
         )
+
+    with tab_export:
+        st.markdown('<div class="section-header">📥 Export Analysis Report</div>', unsafe_allow_html=True)
+        st.markdown(
+            """
+            <div class="action-badge" style="background:rgba(79,70,229,0.08);border-left-color:#818cf8;">
+                ℹ️ Download a full Markdown report with dataset stats, cleaning actions, correlations, outliers, and key insights.
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+        report_md = generate_text_report(cleaned_df, cleaning_report, analysis_results, quality_score_)
+        st.download_button(
+            label="📄 Download Report (.md)",
+            data=report_md.encode("utf-8"),
+            file_name="autoinsight_report.md",
+            mime="text/markdown",
+            key="download_report_md",
+        )
+
+        csv_bytes2 = cleaned_df.to_csv(index=False).encode("utf-8")
+        st.download_button(
+            label="📊 Download Cleaned Dataset (.csv)",
+            data=csv_bytes2,
+            file_name="cleaned_data.csv",
+            mime="text/csv",
+            key="download_csv_export",
+        )
+
+        st.divider()
+        st.markdown("**Report Preview:**")
+        st.code(report_md[:3000] + ("\n…[truncated]" if len(report_md) > 3000 else ""), language="markdown")
 
 
 # ==============================================================================
@@ -829,74 +1101,111 @@ def render_sidebar(df: Optional[pd.DataFrame] = None) -> Tuple[pd.DataFrame, boo
     filtered_df = df
     with st.sidebar:
         st.markdown("### 🔍 AutoInsight")
-        st.caption("Upload. Analyze. Understand.")
+        st.caption("Intelligent Data Analysis & Visualization")
         st.markdown("---")
 
-        st.markdown("#### ⚡ Quick Demo")
-        demo_clicked = st.button("🎲 Load Sample Dataset", **_width_kwarg())
+        st.markdown("#### ⚡ Quick Start")
+        demo_clicked = st.button("🎲 Load Sample Dataset", **_width_kwarg(), key="sidebar_demo_btn")
 
         # ── Dataset filters (only when data is loaded) ──────────────────────
         if df is not None and not df.empty:
             st.markdown("---")
-            st.markdown("#### 🔎 Filters")
+            with st.expander("🔎 Filters", expanded=True):
+                total_rows = len(df)
+                filtered_df = df.copy()
 
-            total_rows = len(df)
-            filtered_df = df.copy()
+                # Categorical multiselects (limit to first 3 to avoid sidebar overflow)
+                cat_cols = df.select_dtypes(include=["object", "category", "str"]).columns.tolist()
+                for col in cat_cols[:3]:
+                    unique_vals = sorted(df[col].dropna().unique().tolist())
+                    if 1 < len(unique_vals) <= 30:
+                        selected = st.multiselect(
+                            f"{col}",
+                            options=unique_vals,
+                            default=unique_vals,
+                            key=f"filter_{col}",
+                        )
+                        if selected:
+                            filtered_df = filtered_df[filtered_df[col].isin(selected)]
 
-            # Categorical multiselects
-            cat_cols = df.select_dtypes(include=["object", "category", "str"]).columns.tolist()
-            for col in cat_cols:
-                unique_vals = sorted(df[col].dropna().unique().tolist())
-                if unique_vals:
-                    selected = st.multiselect(
-                        f"{col}",
-                        options=unique_vals,
-                        default=unique_vals,
-                        key=f"filter_{col}",
-                    )
-                    if selected:
-                        filtered_df = filtered_df[filtered_df[col].isin(selected)]
+                # Numeric range sliders (first 2 numeric cols)
+                num_cols = df.select_dtypes(include=[np.number]).columns.tolist()
+                for col in num_cols[:2]:
+                    col_min = float(df[col].min())
+                    col_max = float(df[col].max())
+                    if col_min < col_max:
+                        rng = st.slider(
+                            f"{col} range",
+                            min_value=col_min,
+                            max_value=col_max,
+                            value=(col_min, col_max),
+                            key=f"num_filter_{col}",
+                        )
+                        filtered_df = filtered_df[filtered_df[col].between(rng[0], rng[1])]
 
-            # Date range picker for the first detected date column
-            date_cols = []
-            for col in df.columns:
-                if col not in cat_cols:
-                    import warnings as _w
-                    with _w.catch_warnings():
-                        _w.simplefilter("ignore")
-                        parsed = pd.to_datetime(df[col], errors="coerce")
-                    if parsed.notna().sum() / max(len(df), 1) > 0.8:
-                        date_cols.append(col)
+                # Date range picker
+                date_cols = []
+                for col in df.columns:
+                    if col not in cat_cols:
+                        import warnings as _w
+                        with _w.catch_warnings():
+                            _w.simplefilter("ignore")
+                            parsed = pd.to_datetime(df[col], errors="coerce")
+                        if parsed.notna().sum() / max(len(df), 1) > 0.8:
+                            date_cols.append(col)
 
-            if date_cols:
-                date_col = date_cols[0]
-                parsed_dates = pd.to_datetime(df[date_col], errors="coerce").dropna()
-                if not parsed_dates.empty:
-                    min_date = parsed_dates.min().date()
-                    max_date = parsed_dates.max().date()
-                    date_range = st.date_input(
-                        f"📅 {date_col} range",
-                        value=(min_date, max_date),
-                        min_value=min_date,
-                        max_value=max_date,
-                        key=f"date_filter_{date_col}",
-                    )
-                    if isinstance(date_range, (list, tuple)) and len(date_range) == 2:
-                        start_d, end_d = date_range
-                        col_as_dates = pd.to_datetime(filtered_df[date_col], errors="coerce").dt.date
-                        filtered_df = filtered_df[
-                            col_as_dates.between(start_d, end_d)
-                        ]
+                if date_cols:
+                    date_col = date_cols[0]
+                    parsed_dates = pd.to_datetime(df[date_col], errors="coerce").dropna()
+                    if not parsed_dates.empty:
+                        min_date = parsed_dates.min().date()
+                        max_date = parsed_dates.max().date()
+                        date_range = st.date_input(
+                            f"📅 {date_col} range",
+                            value=(min_date, max_date),
+                            min_value=min_date,
+                            max_value=max_date,
+                            key=f"date_filter_{date_col}",
+                        )
+                        if isinstance(date_range, (list, tuple)) and len(date_range) == 2:
+                            start_d, end_d = date_range
+                            col_as_dates = pd.to_datetime(filtered_df[date_col], errors="coerce").dt.date
+                            filtered_df = filtered_df[col_as_dates.between(start_d, end_d)]
 
-            shown = len(filtered_df)
-            st.caption(f"Showing **{shown:,}** of **{total_rows:,}** rows")
+                shown = len(filtered_df)
+                st.caption(f"Showing **{shown:,}** of **{total_rows:,}** rows")
+                if shown < total_rows:
+                    if st.button("↺ Reset Filters", key="reset_filters"):
+                        for key in list(st.session_state.keys()):
+                            if key.startswith("filter_") or key.startswith("num_filter_") or key.startswith("date_filter_"):
+                                del st.session_state[key]
+                        st.rerun()
+
+            st.markdown("---")
+            with st.expander("📊 Quick Stats", expanded=False):
+                st.caption(f"**Rows:** {len(df):,}")
+                st.caption(f"**Columns:** {len(df.columns)}")
+                numeric_ct = len(df.select_dtypes(include=[np.number]).columns)
+                cat_ct = len(df.select_dtypes(include=["object","category"]).columns)
+                st.caption(f"**Numeric cols:** {numeric_ct}")
+                st.caption(f"**Categorical cols:** {cat_ct}")
+                missing_tot = int(df.isnull().sum().sum())
+                st.caption(f"**Missing values:** {missing_tot:,}")
+                st.caption(f"**Duplicate rows:** {int(df.duplicated().sum())}")
 
         st.markdown("---")
-        st.caption("🚀 **Hackathon Team Integration**")
-        st.caption("• `modules/loader.py`: Member 1")
-        st.caption("• `modules/cleaner.py`: Member 2")
-        st.caption("• `modules/analyzer.py`: Member 3")
-        st.caption("• `app.py`: Dashboard UI (Active)")
+        with st.expander("🚀 Team Info", expanded=False):
+            st.caption("**DATATHON 2026** — Team AutoInsight")
+            st.caption("• Satyamkumar Singh")
+            st.caption("• Aaditya Patil")
+            st.caption("• Nayan Gharat")
+            st.caption("• Aasmita Sawant")
+            st.markdown("---")
+            st.caption("**Modules**")
+            st.caption("• `data_utils.py` — Loader")
+            st.caption("• `modules/cleaner.py` — Cleaner")
+            st.caption("• `analyzer.py` — Analyzer")
+            st.caption("• `app.py` — Dashboard UI")
 
     return filtered_df, demo_clicked
 

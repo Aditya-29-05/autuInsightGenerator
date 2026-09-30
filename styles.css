@@ -1,13 +1,18 @@
 /* ==============================================================================
-   AutoInsight - Modern Dark Theme & Glassmorphism Design System
-   Accent: Neon Teal / Cyan (#00f5d4 / #06b6d4)
+   AutoInsight – Premium Dark Theme v2.0
+   Accent:  Neon Teal #00f5d4 / Violet #818cf8 / Amber #fbbf24
+   Font:    Inter (Google Fonts)
    ============================================================================== */
 
-/* 1. Global Reset & Streamlit Chrome */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+/* ─── 1. Global Reset & Streamlit Chrome ─────────────────────────────────── */
 .stApp {
-    background-color: #0b0f19;
+    background: radial-gradient(ellipse at 20% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 100%, rgba(0, 245, 212, 0.06) 0%, transparent 50%),
+        #080c14;
     color: #f1f5f9;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 header[data-testid="stHeader"] {
@@ -18,46 +23,106 @@ header[data-testid="stHeader"] {
 }
 
 .block-container {
-    padding-top: 1rem !important;
-    padding-bottom: 2.5rem !important;
+    padding-top: 1.2rem !important;
+    padding-bottom: 3rem !important;
     max-width: 100% !important;
 }
 
-/* 2. High-Contrast Text & Labels */
+/* ─── 2. Scrollbar ───────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0f172a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #00f5d4;
+}
+
+/* ─── 3. Metric Cards ────────────────────────────────────────────────────── */
+[data-testid="stMetric"] {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.85) 100%);
+    border: 1px solid rgba(51, 65, 85, 0.7);
+    border-radius: 14px;
+    padding: 1.1rem 1.3rem !important;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    backdrop-filter: blur(8px);
+}
+
+[data-testid="stMetric"]:hover {
+    border-color: rgba(0, 245, 212, 0.5);
+    box-shadow: 0 0 20px rgba(0, 245, 212, 0.12);
+}
+
+[data-testid="stMetric"]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #00f5d4, #818cf8);
+    opacity: 0.6;
+}
+
 [data-testid="stMetricLabel"] {
-    color: #e5eef5 !important;
+    color: #94a3b8 !important;
     font-weight: 600 !important;
-    font-size: 0.92rem !important;
-    letter-spacing: 0.02em !important;
+    font-size: 0.78rem !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
 }
 
 [data-testid="stMetricValue"] {
     color: #ffffff !important;
     font-weight: 800 !important;
+    font-size: 1.9rem !important;
+    letter-spacing: -0.02em !important;
+    line-height: 1.1 !important;
 }
 
 [data-testid="stMetricDelta"] {
     font-weight: 600 !important;
+    font-size: 0.82rem !important;
 }
 
-label, .stSelectbox label, .stMultiSelect label, .stDateInput label, .stFileUploader label {
-    color: #e5eef5 !important;
+/* ─── 4. Labels ──────────────────────────────────────────────────────────── */
+label,
+.stSelectbox label,
+.stMultiSelect label,
+.stDateInput label,
+.stFileUploader label,
+.stSlider label,
+.stRadio label {
+    color: #e2e8f0 !important;
     font-weight: 600 !important;
+    font-size: 0.9rem !important;
 }
 
-.stCaption, [data-testid="stCaptionContainer"] {
-    color: #cbd5e1 !important;
-    font-size: 0.88rem !important;
+.stCaption,
+[data-testid="stCaptionContainer"] {
+    color: #94a3b8 !important;
+    font-size: 0.83rem !important;
 }
 
-/* 3. Hero Band Section */
+/* ─── 5. Hero Band ───────────────────────────────────────────────────────── */
 .hero-band {
-    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
-    border: 1px solid rgba(6, 182, 212, 0.35);
-    border-radius: 16px;
-    padding: 1.8rem 2.2rem;
-    margin-bottom: 1.4rem;
-    box-shadow: 0 8px 32px 0 rgba(0, 245, 212, 0.08), 0 0 1px 1px rgba(6, 182, 212, 0.2);
+    background: linear-gradient(135deg, #0d1224 0%, #141832 40%, #0d1224 100%);
+    border: 1px solid rgba(129, 140, 248, 0.3);
+    border-radius: 20px;
+    padding: 2rem 2.4rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(129, 140, 248, 0.1);
     position: relative;
     overflow: hidden;
 }
@@ -65,104 +130,135 @@ label, .stSelectbox label, .stMultiSelect label, .stDateInput label, .stFileUplo
 .hero-band::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at 30% 30%, rgba(6, 182, 212, 0.12) 0%, transparent 60%);
+    top: -60%;
+    left: -30%;
+    width: 80%;
+    height: 220%;
+    background: radial-gradient(ellipse, rgba(129, 140, 248, 0.15) 0%, transparent 65%);
     pointer-events: none;
+    animation: heroGlow 8s ease-in-out infinite alternate;
+}
+
+.hero-band::after {
+    content: '';
+    position: absolute;
+    bottom: -40%;
+    right: -10%;
+    width: 60%;
+    height: 160%;
+    background: radial-gradient(ellipse, rgba(0, 245, 212, 0.10) 0%, transparent 65%);
+    pointer-events: none;
+    animation: heroGlow 8s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes heroGlow {
+    0% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1.08);
+    }
 }
 
 .hero-band-title {
-    font-size: 2.3rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: -0.04em;
     margin: 0 0 0.3rem 0;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    text-shadow: 0 0 25px rgba(6, 182, 212, 0.5);
+    background: linear-gradient(135deg, #ffffff 0%, #a5f3fc 40%, #818cf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    z-index: 1;
 }
 
 .hero-band-subtitle {
-    font-size: 1.08rem;
+    font-size: 1.1rem;
     font-weight: 500;
-    color: #cbd5e1;
-    margin-bottom: 1rem;
-    letter-spacing: -0.01em;
+    color: #94a3b8;
+    margin-bottom: 1.2rem;
+    position: relative;
+    z-index: 1;
 }
 
 .hero-pills {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.6rem;
+    gap: 0.55rem;
+    position: relative;
+    z-index: 1;
 }
 
 .hero-pill {
-    background: rgba(15, 23, 42, 0.7);
-    border: 1px solid rgba(6, 182, 212, 0.3);
+    background: rgba(15, 23, 42, 0.75);
+    border: 1px solid rgba(129, 140, 248, 0.35);
     border-radius: 20px;
-    padding: 0.35rem 0.85rem;
-    font-size: 0.82rem;
+    padding: 0.32rem 0.9rem;
+    font-size: 0.8rem;
     font-weight: 600;
-    color: #38bdf8;
+    color: #a5b4fc;
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(10px);
     transition: all 0.2s ease;
 }
 
 .hero-pill:hover {
     border-color: #00f5d4;
     color: #00f5d4;
-    box-shadow: 0 0 10px rgba(0, 245, 212, 0.2);
+    box-shadow: 0 0 12px rgba(0, 245, 212, 0.25);
 }
 
-/* 4. Streamlit Buttons (High Contrast & Glowing Teal) */
-.stButton > button,
+/* ─── 6. Buttons ─────────────────────────────────────────────────────────── */
+.stButton>button,
 button[data-testid="baseButton-secondary"],
-button[data-testid="baseButton-primary"],
-button[kind="secondary"],
-button[kind="primary"] {
-    background: linear-gradient(135deg, #0284c7 0%, #0d9488 100%) !important;
+button[data-testid="baseButton-primary"] {
+    background: linear-gradient(135deg, #4f46e5 0%, #0891b2 100%) !important;
     color: #ffffff !important;
     font-weight: 700 !important;
-    border: 1px solid rgba(0, 245, 212, 0.45) !important;
-    border-radius: 8px !important;
-    padding: 0.55rem 1.1rem !important;
-    box-shadow: 0 4px 14px rgba(6, 182, 212, 0.25) !important;
-    transition: all 0.2s ease !important;
+    font-family: 'Inter', sans-serif !important;
+    border: 1px solid rgba(129, 140, 248, 0.4) !important;
+    border-radius: 10px !important;
+    padding: 0.55rem 1.2rem !important;
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3) !important;
+    transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    letter-spacing: 0.01em !important;
 }
 
-.stButton > button:hover,
+.stButton>button:hover,
 button[data-testid="baseButton-secondary"]:hover,
 button[data-testid="baseButton-primary"]:hover {
-    background: linear-gradient(135deg, #0369a1 0%, #0f766e 100%) !important;
-    color: #ffffff !important;
+    background: linear-gradient(135deg, #4338ca 0%, #0e7490 100%) !important;
     border-color: #00f5d4 !important;
-    box-shadow: 0 0 18px rgba(0, 245, 212, 0.55) !important;
+    box-shadow: 0 0 22px rgba(0, 245, 212, 0.5) !important;
+    transform: translateY(-1px) !important;
 }
 
-.stButton > button p,
-.stButton > button span,
-.stButton > button div {
+.stButton>button p,
+.stButton>button span,
+.stButton>button div {
     color: #ffffff !important;
     font-weight: 700 !important;
 }
 
-/* 5. Streamlit File Uploader Contrast Fix */
+/* ─── 7. File Uploader ───────────────────────────────────────────────────── */
 [data-testid="stFileUploader"] section {
-    background-color: #111827 !important;
-    border: 1.5px dashed rgba(6, 182, 212, 0.5) !important;
-    border-radius: 10px !important;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(17, 24, 39, 0.9) 100%) !important;
+    border: 2px dashed rgba(129, 140, 248, 0.45) !important;
+    border-radius: 14px !important;
     color: #f1f5f9 !important;
+    transition: all 0.2s ease !important;
 }
 
 [data-testid="stFileUploader"] section:hover {
     border-color: #00f5d4 !important;
-    background-color: #172033 !important;
+    background: rgba(0, 245, 212, 0.04) !important;
+    box-shadow: 0 0 20px rgba(0, 245, 212, 0.12) !important;
 }
 
 [data-testid="stFileUploader"] span,
@@ -176,40 +272,54 @@ button[data-testid="baseButton-primary"]:hover {
 }
 
 [data-testid="stFileUploader"] button {
-    background-color: #1e293b !important;
-    color: #00f5d4 !important;
-    border: 1px solid rgba(0, 245, 212, 0.4) !important;
+    background-color: rgba(79, 70, 229, 0.2) !important;
+    color: #a5b4fc !important;
+    border: 1px solid rgba(129, 140, 248, 0.4) !important;
     font-weight: 600 !important;
+    border-radius: 8px !important;
 }
 
 [data-testid="stFileUploader"] button:hover {
-    background-color: #0f172a !important;
-    color: #38bdf8 !important;
-    border-color: #00f5d4 !important;
+    background-color: rgba(79, 70, 229, 0.35) !important;
+    color: #ffffff !important;
+    border-color: #818cf8 !important;
 }
 
 [data-testid="stFileUploader"] button p,
 [data-testid="stFileUploader"] button span {
-    color: #00f5d4 !important;
+    color: #a5b4fc !important;
 }
 
-/* 6. Connected Dataset Strip Badge */
+/* ─── 8. Dataset Connected Strip ─────────────────────────────────────────── */
 .dataset-strip {
-    background: linear-gradient(90deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
-    border: 1px solid rgba(0, 245, 212, 0.45);
-    border-radius: 10px;
-    padding: 0.8rem 1.2rem;
-    margin-bottom: 1.2rem;
+    background: linear-gradient(90deg, rgba(0, 245, 212, 0.06) 0%, rgba(129, 140, 248, 0.06) 100%);
+    border: 1px solid rgba(0, 245, 212, 0.4);
+    border-radius: 12px;
+    padding: 0.85rem 1.3rem;
+    margin-bottom: 1.3rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 4px 20px rgba(0, 245, 212, 0.12), inset 0 0 15px rgba(0, 245, 212, 0.05);
+    box-shadow: 0 0 30px rgba(0, 245, 212, 0.08), inset 0 0 20px rgba(0, 245, 212, 0.03);
+    animation: stripFadeIn 0.5s ease;
+}
+
+@keyframes stripFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .dataset-strip-left {
     display: flex;
     align-items: center;
-    gap: 0.85rem;
+    gap: 0.9rem;
 }
 
 .status-dot {
@@ -217,21 +327,25 @@ button[data-testid="baseButton-primary"]:hover {
     height: 10px;
     border-radius: 50%;
     background-color: #00f5d4;
-    box-shadow: 0 0 8px #00f5d4, 0 0 16px rgba(0, 245, 212, 0.8);
+    box-shadow: 0 0 8px #00f5d4, 0 0 18px rgba(0, 245, 212, 0.7);
     display: inline-block;
     animation: pulseGlow 2s infinite ease-in-out;
+    flex-shrink: 0;
 }
 
 @keyframes pulseGlow {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
         opacity: 0.9;
-        box-shadow: 0 0 8px #00f5d4, 0 0 16px rgba(0, 245, 212, 0.8);
+        box-shadow: 0 0 8px #00f5d4, 0 0 16px rgba(0, 245, 212, 0.7);
     }
+
     50% {
-        transform: scale(1.2);
+        transform: scale(1.3);
         opacity: 1;
-        box-shadow: 0 0 12px #00f5d4, 0 0 24px rgba(0, 245, 212, 1);
+        box-shadow: 0 0 14px #00f5d4, 0 0 28px rgba(0, 245, 212, 1);
     }
 }
 
@@ -243,34 +357,37 @@ button[data-testid="baseButton-primary"]:hover {
 }
 
 .dataset-badge {
-    background: rgba(0, 245, 212, 0.12);
+    background: rgba(0, 245, 212, 0.14);
     color: #00f5d4;
-    border: 1px solid rgba(0, 245, 212, 0.3);
+    border: 1px solid rgba(0, 245, 212, 0.35);
     border-radius: 6px;
-    padding: 0.2rem 0.6rem;
-    font-size: 0.82rem;
-    font-weight: 600;
+    padding: 0.18rem 0.6rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
 }
 
 .dataset-meta {
     font-size: 0.9rem;
     font-weight: 500;
-    color: #e5eef5;
+    color: #cbd5e1;
 }
 
-/* 7. Streamlit Tabs Customization */
+/* ─── 9. Tabs ─────────────────────────────────────────────────────────────── */
 button[data-baseweb="tab"] {
     background-color: transparent !important;
     border-radius: 8px 8px 0 0 !important;
-    color: #cbd5e1 !important;
+    color: #64748b !important;
     font-weight: 600 !important;
-    font-size: 0.96rem !important;
-    padding: 0.6rem 1.2rem !important;
+    font-size: 0.9rem !important;
+    padding: 0.65rem 1.3rem !important;
     transition: all 0.2s ease !important;
+    font-family: 'Inter', sans-serif !important;
 }
 
 button[data-baseweb="tab"]:hover {
-    color: #f1f5f9 !important;
+    color: #cbd5e1 !important;
+    background-color: rgba(129, 140, 248, 0.06) !important;
 }
 
 button[data-baseweb="tab"][aria-selected="true"] {
@@ -279,47 +396,56 @@ button[data-baseweb="tab"][aria-selected="true"] {
     border-bottom: 2px solid #00f5d4 !important;
 }
 
-/* 8. Action Badges & Key Finding Cards */
-.action-badge {
-    background: rgba(15, 23, 42, 0.8);
-    border-left: 4px solid #00f5d4;
-    border-radius: 6px;
-    padding: 0.75rem 1rem;
-    margin-bottom: 0.6rem;
-    font-size: 0.95rem;
-    color: #e5eef5;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
+/* ─── 10. Section Header ─────────────────────────────────────────────────── */
 .section-header {
-    font-size: 1.35rem;
-    font-weight: 700;
+    font-size: 1.3rem;
+    font-weight: 800;
     color: #f8fafc;
-    margin: 1.4rem 0 0.8rem 0;
+    margin: 1.6rem 0 0.85rem 0;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.55rem;
+    letter-spacing: -0.02em;
+    position: relative;
+    padding-left: 1rem;
 }
 
+.section-header::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 15%;
+    height: 70%;
+    width: 3px;
+    background: linear-gradient(180deg, #00f5d4, #818cf8);
+    border-radius: 2px;
+}
+
+/* ─── 11. Insight Cards ──────────────────────────────────────────────────── */
 .insight-card {
-    border-radius: 10px;
-    padding: 1.1rem 1.3rem;
+    border-radius: 12px;
+    padding: 1.15rem 1.4rem;
     margin-bottom: 0.9rem;
-    border: 1px solid rgba(51, 65, 85, 0.7);
-    background-color: #0f172a;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(51, 65, 85, 0.6);
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.insight-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .insight-card.correlation {
     border-left: 4px solid #f97316;
-    background: rgba(30, 27, 75, 0.4);
+    background: rgba(30, 27, 75, 0.45);
 }
 
 .insight-card.category {
-    border-left: 4px solid #8b5cf6;
-    background: rgba(24, 24, 27, 0.6);
+    border-left: 4px solid #a78bfa;
+    background: rgba(24, 24, 27, 0.65);
 }
 
 .insight-card.anomaly {
@@ -329,28 +455,144 @@ button[data-baseweb="tab"][aria-selected="true"] {
 
 .insight-card.general {
     border-left: 4px solid #06b6d4;
-    background: rgba(15, 23, 42, 0.6);
+    background: rgba(15, 23, 42, 0.65);
 }
 
 .insight-header {
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     text-transform: uppercase;
     font-weight: 700;
-    letter-spacing: 0.04em;
-    margin-bottom: 0.35rem;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.4rem;
     display: flex;
     align-items: center;
     gap: 0.4rem;
 }
 
 .insight-text {
-    font-size: 1rem;
+    font-size: 0.97rem;
     font-weight: 500;
     color: #f1f5f9;
     margin: 0;
+    line-height: 1.5;
 }
 
-/* 9. Column Type Badges */
+/* ─── 12. Action Badges (Cleaning Log) ───────────────────────────────────── */
+.action-badge {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(0, 245, 212, 0.2);
+    border-left: 4px solid #00f5d4;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.55rem;
+    font-size: 0.92rem;
+    color: #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    transition: background 0.2s ease;
+}
+
+.action-badge:hover {
+    background: rgba(0, 245, 212, 0.06);
+}
+
+/* ─── 13. Welcome Card ───────────────────────────────────────────────────── */
+.welcome-card {
+    text-align: center;
+    padding: 3.5rem 2rem;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(20, 24, 50, 0.8) 100%);
+    border: 1px solid rgba(129, 140, 248, 0.25);
+    border-radius: 20px;
+    margin-top: 1.5rem;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.welcome-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+    animation: shimmer 4s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 200%;
+    }
+}
+
+.welcome-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    animation: floatIcon 3s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.welcome-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #ffffff, #a5f3fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.8rem;
+}
+
+.welcome-desc {
+    color: #94a3b8;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.feature-pill-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+.feature-pill {
+    background: rgba(79, 70, 229, 0.12);
+    border: 1px solid rgba(129, 140, 248, 0.3);
+    border-radius: 20px;
+    padding: 0.4rem 1rem;
+    font-size: 0.87rem;
+    font-weight: 600;
+    color: #a5b4fc;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.check {
+    color: #00f5d4;
+    font-weight: 800;
+}
+
+/* ─── 14. Column Type Pills ──────────────────────────────────────────────── */
 .type-pills-container {
     display: flex;
     flex-wrap: wrap;
@@ -363,32 +605,252 @@ button[data-baseweb="tab"][aria-selected="true"] {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    padding: 0.3rem 0.75rem;
+    padding: 0.28rem 0.75rem;
     border-radius: 6px;
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     font-weight: 600;
+    transition: transform 0.15s ease;
+}
+
+.type-pill:hover {
+    transform: scale(1.04);
 }
 
 .type-pill.date {
     color: #38bdf8;
-    background: rgba(56, 189, 248, 0.14);
-    border: 1px solid rgba(56, 189, 248, 0.35);
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.3);
 }
 
 .type-pill.numeric {
-    color: #10b981;
-    background: rgba(16, 185, 129, 0.14);
-    border: 1px solid rgba(16, 185, 129, 0.35);
+    color: #34d399;
+    background: rgba(52, 211, 153, 0.12);
+    border: 1px solid rgba(52, 211, 153, 0.3);
 }
 
 .type-pill.categorical {
     color: #c084fc;
-    background: rgba(192, 132, 252, 0.14);
-    border: 1px solid rgba(192, 132, 252, 0.35);
+    background: rgba(192, 132, 252, 0.12);
+    border: 1px solid rgba(192, 132, 252, 0.3);
 }
 
 .type-pill.text {
+    color: #94a3b8;
+    background: rgba(148, 163, 184, 0.12);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+/* ─── 15. Data Quality Gauge ─────────────────────────────────────────────── */
+.quality-gauge-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 1rem;
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(51, 65, 85, 0.7);
+    border-radius: 14px;
+    backdrop-filter: blur(6px);
+}
+
+.quality-score-number {
+    font-size: 3.2rem;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1;
+}
+
+.quality-label-text {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 0.4rem;
+}
+
+/* ─── 16. Chart Builder Card ─────────────────────────────────────────────── */
+.chart-builder-card {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(17, 24, 39, 0.85) 100%);
+    border: 1px solid rgba(129, 140, 248, 0.25);
+    border-radius: 14px;
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 1rem;
+    backdrop-filter: blur(8px);
+}
+
+/* ─── 17. Sidebar Styling ────────────────────────────────────────────────── */
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #0a0e1a 0%, #0d1221 100%) !important;
+    border-right: 1px solid rgba(129, 140, 248, 0.15) !important;
+}
+
+[data-testid="stSidebar"] * {
+    font-family: 'Inter', sans-serif !important;
+}
+
+[data-testid="stSidebar"] .stMarkdown h3 {
+    background: linear-gradient(135deg, #00f5d4, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 1.25rem !important;
+    font-weight: 800 !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stExpander"] {
+    background: rgba(15, 23, 42, 0.6) !important;
+    border: 1px solid rgba(51, 65, 85, 0.5) !important;
+    border-radius: 10px !important;
+}
+
+/* ─── 18. Expander ───────────────────────────────────────────────────────── */
+[data-testid="stExpander"] {
+    border: 1px solid rgba(51, 65, 85, 0.6) !important;
+    border-radius: 10px !important;
+    background: rgba(15, 23, 42, 0.5) !important;
+}
+
+[data-testid="stExpanderToggleIcon"] {
+    color: #818cf8 !important;
+}
+
+/* ─── 19. Dataframe / Table ──────────────────────────────────────────────── */
+[data-testid="stDataFrame"] {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.stDataFrame iframe {
+    border-radius: 10px;
+}
+
+/* ─── 20. Selectbox & Multiselect ────────────────────────────────────────── */
+[data-testid="stSelectbox"]>div>div,
+[data-testid="stMultiSelect"]>div>div {
+    background-color: rgba(15, 23, 42, 0.9) !important;
+    border: 1px solid rgba(51, 65, 85, 0.8) !important;
+    border-radius: 8px !important;
+    color: #f1f5f9 !important;
+}
+
+[data-testid="stSelectbox"]>div>div:focus-within,
+[data-testid="stMultiSelect"]>div>div:focus-within {
+    border-color: #818cf8 !important;
+    box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.25) !important;
+}
+
+/* ─── 21. Info / Warning / Error boxes ───────────────────────────────────── */
+[data-testid="stAlert"] {
+    border-radius: 10px !important;
+    border-left-width: 4px !important;
+}
+
+/* ─── 22. Download button ────────────────────────────────────────────────── */
+[data-testid="stDownloadButton"]>button {
+    background: linear-gradient(135deg, rgba(0, 245, 212, 0.15) 0%, rgba(129, 140, 248, 0.15) 100%) !important;
+    border: 1px solid rgba(0, 245, 212, 0.4) !important;
+    color: #00f5d4 !important;
+    font-weight: 700 !important;
+    border-radius: 10px !important;
+    transition: all 0.22s ease !important;
+}
+
+[data-testid="stDownloadButton"]>button:hover {
+    background: linear-gradient(135deg, rgba(0, 245, 212, 0.25) 0%, rgba(129, 140, 248, 0.25) 100%) !important;
+    box-shadow: 0 0 20px rgba(0, 245, 212, 0.3) !important;
+    transform: translateY(-1px) !important;
+}
+
+[data-testid="stDownloadButton"]>button p,
+[data-testid="stDownloadButton"]>button span {
+    color: #00f5d4 !important;
+}
+
+/* ─── 23. Divider ────────────────────────────────────────────────────────── */
+hr {
+    border-color: rgba(51, 65, 85, 0.5) !important;
+    margin: 1.5rem 0 !important;
+}
+
+/* ─── 24. Stat summary row ───────────────────────────────────────────────── */
+.stat-row {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.stat-chip {
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(51, 65, 85, 0.8);
+    border-radius: 8px;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.82rem;
+    font-weight: 600;
     color: #cbd5e1;
-    background: rgba(148, 163, 184, 0.14);
-    border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.stat-chip strong {
+    color: #f1f5f9;
+}
+
+/* ─── 25. Fade-in animation for sections ─────────────────────────────────── */
+@keyframes fadeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeSlideUp 0.4s ease both;
+}
+
+/* ─── 26. Gradient badge row (header area) ───────────────────────────────── */
+.badge-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+
+.badge {
+    padding: 0.2rem 0.7rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.badge-teal {
+    background: rgba(0, 245, 212, 0.15);
+    color: #00f5d4;
+    border: 1px solid rgba(0, 245, 212, 0.3);
+}
+
+.badge-violet {
+    background: rgba(129, 140, 248, 0.15);
+    color: #a5b4fc;
+    border: 1px solid rgba(129, 140, 248, 0.3);
+}
+
+.badge-amber {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+/* ─── 27. Progress bar override ──────────────────────────────────────────── */
+[data-testid="stProgress"]>div>div>div>div {
+    background: linear-gradient(90deg, #00f5d4, #818cf8) !important;
+    border-radius: 4px !important;
+}
+
+/* ─── 28. Radio buttons ──────────────────────────────────────────────────── */
+[data-testid="stRadio"] label {
+    color: #e2e8f0 !important;
 }
