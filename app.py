@@ -191,9 +191,9 @@ def show_header() -> None:
                 <div class="hero-pill">📥 Export reports</div>
             </div>
             <div class="badge-row" style="margin-top:1rem;">
-                <span class="badge badge-teal">DATATHON 2026</span>
-                <span class="badge badge-violet">Team AutoInsight</span>
-                <span class="badge badge-amber">v2.0</span>
+                <span class="badge badge-blue">DATATHON 2026</span>
+                <span class="badge badge-slate">Team AutoInsight</span>
+                <span class="badge badge-emerald">v2.1 Enterprise</span>
             </div>
         </div>
         """,
@@ -435,11 +435,11 @@ def show_data_quality_gauge(score: float, missing: int, dupes: int, outliers: in
     st.markdown('<div class="section-header">🎯 Data Quality Score</div>', unsafe_allow_html=True)
 
     if score >= 80:
-        color = "#00f5d4"
+        color = "#10b981"
         label = "Excellent"
         emoji = "✅"
     elif score >= 60:
-        color = "#fbbf24"
+        color = "#f59e0b"
         label = "Fair"
         emoji = "⚠️"
     else:
@@ -498,14 +498,14 @@ def show_chart_builder(df: pd.DataFrame) -> None:
         color_col = st.selectbox("Color by (optional)", ["None"] + cat_cols, key="cb_color")
 
     color_arg = color_col if color_col != "None" else None
-    palettes = ["Viridis", "Plasma", "Teal", "Purples", "Oranges", "Blues"]
+    palettes = ["Blues", "Teal", "Viridis", "Plasma", "Cividis", "Oranges"]
     palette_map = {
+        "Blues": px.colors.sequential.Blues,
+        "Teal": px.colors.sequential.Teal,
         "Viridis": px.colors.sequential.Viridis,
         "Plasma": px.colors.sequential.Plasma,
-        "Teal": ["#00f5d4", "#06b6d4", "#0891b2", "#0e7490"],
-        "Purples": px.colors.sequential.Purples,
+        "Cividis": px.colors.sequential.Cividis,
         "Oranges": px.colors.sequential.Oranges,
-        "Blues": px.colors.sequential.Blues,
     }
 
     p1, p2, p3 = st.columns([2, 2, 1])
@@ -1063,7 +1063,7 @@ def display_dashboard(
         st.markdown('<div class="section-header">📥 Export Analysis Report</div>', unsafe_allow_html=True)
         st.markdown(
             """
-            <div class="action-badge" style="background:rgba(79,70,229,0.08);border-left-color:#818cf8;">
+            <div class="action-badge" style="background:rgba(37,99,235,0.06);border-left-color:#2563eb;">
                 ℹ️ Download a full Markdown report with dataset stats, cleaning actions, correlations, outliers, and key insights.
             </div>
             """,

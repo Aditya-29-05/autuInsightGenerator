@@ -1,18 +1,17 @@
 /* ==============================================================================
-   AutoInsight – Premium Dark Theme v2.0
-   Accent:  Neon Teal #00f5d4 / Violet #818cf8 / Amber #fbbf24
-   Font:    Inter (Google Fonts)
+   AutoInsight – Enterprise Analytics Design System v2.1
+   Style:    Professional Dark Slate / Executive Clean
+   Accent:   Corporate Blue #2563eb / Sky #0ea5e9 / Emerald #10b981
+   Font:     Inter (Google Fonts)
    ============================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 /* ─── 1. Global Reset & Streamlit Chrome ─────────────────────────────────── */
 .stApp {
-    background: radial-gradient(ellipse at 20% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 100%, rgba(0, 245, 212, 0.06) 0%, transparent 50%),
-        #080c14;
+    background-color: #090d16;
     color: #f1f5f9;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 header[data-testid="stHeader"] {
@@ -35,33 +34,32 @@ header[data-testid="stHeader"] {
 }
 
 ::-webkit-scrollbar-track {
-    background: #0f172a;
+    background: #090d16;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #334155;
+    background: #1e293b;
     border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #00f5d4;
+    background: #334155;
 }
 
 /* ─── 3. Metric Cards ────────────────────────────────────────────────────── */
 [data-testid="stMetric"] {
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.85) 100%);
-    border: 1px solid rgba(51, 65, 85, 0.7);
-    border-radius: 14px;
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 10px;
     padding: 1.1rem 1.3rem !important;
     position: relative;
     overflow: hidden;
-    transition: border-color 0.25s ease, box-shadow 0.25s ease;
-    backdrop-filter: blur(8px);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 [data-testid="stMetric"]:hover {
-    border-color: rgba(0, 245, 212, 0.5);
-    box-shadow: 0 0 20px rgba(0, 245, 212, 0.12);
+    border-color: #334155;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
 [data-testid="stMetric"]::before {
@@ -71,24 +69,23 @@ header[data-testid="stHeader"] {
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, #00f5d4, #818cf8);
-    opacity: 0.6;
+    background: #2563eb;
 }
 
 [data-testid="stMetricLabel"] {
     color: #94a3b8 !important;
     font-weight: 600 !important;
-    font-size: 0.78rem !important;
-    letter-spacing: 0.08em !important;
+    font-size: 0.76rem !important;
+    letter-spacing: 0.06em !important;
     text-transform: uppercase !important;
 }
 
 [data-testid="stMetricValue"] {
     color: #ffffff !important;
-    font-weight: 800 !important;
-    font-size: 1.9rem !important;
+    font-weight: 700 !important;
+    font-size: 1.85rem !important;
     letter-spacing: -0.02em !important;
-    line-height: 1.1 !important;
+    line-height: 1.2 !important;
 }
 
 [data-testid="stMetricDelta"] {
@@ -96,7 +93,7 @@ header[data-testid="stHeader"] {
     font-size: 0.82rem !important;
 }
 
-/* ─── 4. Labels ──────────────────────────────────────────────────────────── */
+/* ─── 4. Form Labels & Captions ─────────────────────────────────────────── */
 label,
 .stSelectbox label,
 .stMultiSelect label,
@@ -104,161 +101,128 @@ label,
 .stFileUploader label,
 .stSlider label,
 .stRadio label {
-    color: #e2e8f0 !important;
+    color: #cbd5e1 !important;
     font-weight: 600 !important;
-    font-size: 0.9rem !important;
+    font-size: 0.88rem !important;
+    letter-spacing: 0.01em !important;
 }
 
 .stCaption,
 [data-testid="stCaptionContainer"] {
     color: #94a3b8 !important;
-    font-size: 0.83rem !important;
+    font-size: 0.82rem !important;
 }
 
-/* ─── 5. Hero Band ───────────────────────────────────────────────────────── */
+/* ─── 5. Executive Header Band ──────────────────────────────────────────── */
 .hero-band {
-    background: linear-gradient(135deg, #0d1224 0%, #141832 40%, #0d1224 100%);
-    border: 1px solid rgba(129, 140, 248, 0.3);
-    border-radius: 20px;
-    padding: 2rem 2.4rem;
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 1.6rem 2rem;
     margin-bottom: 1.5rem;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(129, 140, 248, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     position: relative;
-    overflow: hidden;
 }
 
 .hero-band::before {
     content: '';
     position: absolute;
-    top: -60%;
-    left: -30%;
-    width: 80%;
-    height: 220%;
-    background: radial-gradient(ellipse, rgba(129, 140, 248, 0.15) 0%, transparent 65%);
-    pointer-events: none;
-    animation: heroGlow 8s ease-in-out infinite alternate;
-}
-
-.hero-band::after {
-    content: '';
-    position: absolute;
-    bottom: -40%;
-    right: -10%;
-    width: 60%;
-    height: 160%;
-    background: radial-gradient(ellipse, rgba(0, 245, 212, 0.10) 0%, transparent 65%);
-    pointer-events: none;
-    animation: heroGlow 8s ease-in-out infinite alternate-reverse;
-}
-
-@keyframes heroGlow {
-    0% {
-        opacity: 0.5;
-        transform: scale(1);
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(1.08);
-    }
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #2563eb;
+    border-radius: 12px 12px 0 0;
 }
 
 .hero-band-title {
-    font-size: 2.5rem;
-    font-weight: 900;
-    letter-spacing: -0.04em;
-    margin: 0 0 0.3rem 0;
-    background: linear-gradient(135deg, #ffffff 0%, #a5f3fc 40%, #818cf8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    position: relative;
-    z-index: 1;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: #f8fafc;
+    margin: 0 0 0.35rem 0;
+    line-height: 1.2;
 }
 
 .hero-band-subtitle {
-    font-size: 1.1rem;
-    font-weight: 500;
+    font-size: 0.95rem;
+    font-weight: 400;
     color: #94a3b8;
-    margin-bottom: 1.2rem;
-    position: relative;
-    z-index: 1;
+    margin-bottom: 1rem;
+    line-height: 1.5;
 }
 
 .hero-pills {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.55rem;
-    position: relative;
-    z-index: 1;
+    gap: 0.5rem;
 }
 
 .hero-pill {
-    background: rgba(15, 23, 42, 0.75);
-    border: 1px solid rgba(129, 140, 248, 0.35);
-    border-radius: 20px;
-    padding: 0.32rem 0.9rem;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    padding: 0.3rem 0.75rem;
     font-size: 0.8rem;
-    font-weight: 600;
-    color: #a5b4fc;
+    font-weight: 500;
+    color: #cbd5e1;
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    backdrop-filter: blur(10px);
-    transition: all 0.2s ease;
+    gap: 0.35rem;
+    transition: border-color 0.15s ease, color 0.15s ease;
 }
 
 .hero-pill:hover {
-    border-color: #00f5d4;
-    color: #00f5d4;
-    box-shadow: 0 0 12px rgba(0, 245, 212, 0.25);
+    border-color: #64748b;
+    color: #ffffff;
 }
 
-/* ─── 6. Buttons ─────────────────────────────────────────────────────────── */
+/* ─── 6. Enterprise Buttons ─────────────────────────────────────────────── */
 .stButton>button,
 button[data-testid="baseButton-secondary"],
 button[data-testid="baseButton-primary"] {
-    background: linear-gradient(135deg, #4f46e5 0%, #0891b2 100%) !important;
+    background-color: #2563eb !important;
+    background-image: none !important;
     color: #ffffff !important;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
     font-family: 'Inter', sans-serif !important;
-    border: 1px solid rgba(129, 140, 248, 0.4) !important;
-    border-radius: 10px !important;
-    padding: 0.55rem 1.2rem !important;
-    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3) !important;
-    transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border: 1px solid #1d4ed8 !important;
+    border-radius: 8px !important;
+    padding: 0.5rem 1.2rem !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease !important;
     letter-spacing: 0.01em !important;
 }
 
 .stButton>button:hover,
 button[data-testid="baseButton-secondary"]:hover,
 button[data-testid="baseButton-primary"]:hover {
-    background: linear-gradient(135deg, #4338ca 0%, #0e7490 100%) !important;
-    border-color: #00f5d4 !important;
-    box-shadow: 0 0 22px rgba(0, 245, 212, 0.5) !important;
-    transform: translateY(-1px) !important;
+    background-color: #1d4ed8 !important;
+    border-color: #1e40af !important;
+    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25) !important;
+    transform: none !important;
 }
 
 .stButton>button p,
 .stButton>button span,
 .stButton>button div {
     color: #ffffff !important;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
 }
 
 /* ─── 7. File Uploader ───────────────────────────────────────────────────── */
 [data-testid="stFileUploader"] section {
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(17, 24, 39, 0.9) 100%) !important;
-    border: 2px dashed rgba(129, 140, 248, 0.45) !important;
-    border-radius: 14px !important;
-    color: #f1f5f9 !important;
-    transition: all 0.2s ease !important;
+    background: #0f172a !important;
+    border: 1.5px dashed #334155 !important;
+    border-radius: 10px !important;
+    color: #cbd5e1 !important;
+    transition: border-color 0.2s ease, background-color 0.2s ease !important;
+    padding: 1.5rem 1rem !important;
 }
 
 [data-testid="stFileUploader"] section:hover {
-    border-color: #00f5d4 !important;
-    background: rgba(0, 245, 212, 0.04) !important;
-    box-shadow: 0 0 20px rgba(0, 245, 212, 0.12) !important;
+    border-color: #2563eb !important;
+    background: rgba(37, 99, 235, 0.03) !important;
 }
 
 [data-testid="stFileUploader"] span,
@@ -268,146 +232,116 @@ button[data-testid="baseButton-primary"]:hover {
 [data-testid="stFileUploaderDropzoneInstructions"],
 [data-testid="stFileUploaderDropzoneInstructions"] span,
 [data-testid="stFileUploaderDropzoneInstructions"] small {
-    color: #e2e8f0 !important;
+    color: #94a3b8 !important;
 }
 
 [data-testid="stFileUploader"] button {
-    background-color: rgba(79, 70, 229, 0.2) !important;
-    color: #a5b4fc !important;
-    border: 1px solid rgba(129, 140, 248, 0.4) !important;
-    font-weight: 600 !important;
-    border-radius: 8px !important;
+    background-color: #1e293b !important;
+    color: #f8fafc !important;
+    border: 1px solid #475569 !important;
+    font-weight: 500 !important;
+    border-radius: 6px !important;
+    padding: 0.35rem 0.85rem !important;
+    transition: background-color 0.15s ease !important;
 }
 
 [data-testid="stFileUploader"] button:hover {
-    background-color: rgba(79, 70, 229, 0.35) !important;
+    background-color: #2563eb !important;
+    border-color: #2563eb !important;
     color: #ffffff !important;
-    border-color: #818cf8 !important;
 }
 
 [data-testid="stFileUploader"] button p,
 [data-testid="stFileUploader"] button span {
-    color: #a5b4fc !important;
+    color: inherit !important;
 }
 
-/* ─── 8. Dataset Connected Strip ─────────────────────────────────────────── */
+/* ─── 8. Connected Dataset Strip ─────────────────────────────────────────── */
 .dataset-strip {
-    background: linear-gradient(90deg, rgba(0, 245, 212, 0.06) 0%, rgba(129, 140, 248, 0.06) 100%);
-    border: 1px solid rgba(0, 245, 212, 0.4);
-    border-radius: 12px;
-    padding: 0.85rem 1.3rem;
-    margin-bottom: 1.3rem;
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 0.75rem 1.2rem;
+    margin-bottom: 1.2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 0 30px rgba(0, 245, 212, 0.08), inset 0 0 20px rgba(0, 245, 212, 0.03);
-    animation: stripFadeIn 0.5s ease;
-}
-
-@keyframes stripFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-6px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .dataset-strip-left {
     display: flex;
     align-items: center;
-    gap: 0.9rem;
+    gap: 0.75rem;
 }
 
 .status-dot {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    background-color: #00f5d4;
-    box-shadow: 0 0 8px #00f5d4, 0 0 18px rgba(0, 245, 212, 0.7);
+    background-color: #10b981;
     display: inline-block;
-    animation: pulseGlow 2s infinite ease-in-out;
     flex-shrink: 0;
 }
 
-@keyframes pulseGlow {
-
-    0%,
-    100% {
-        transform: scale(1);
-        opacity: 0.9;
-        box-shadow: 0 0 8px #00f5d4, 0 0 16px rgba(0, 245, 212, 0.7);
-    }
-
-    50% {
-        transform: scale(1.3);
-        opacity: 1;
-        box-shadow: 0 0 14px #00f5d4, 0 0 28px rgba(0, 245, 212, 1);
-    }
-}
-
 .dataset-filename {
-    font-size: 1rem;
-    font-weight: 700;
+    font-size: 0.95rem;
+    font-weight: 600;
     color: #f8fafc;
-    letter-spacing: -0.01em;
 }
 
 .dataset-badge {
-    background: rgba(0, 245, 212, 0.14);
-    color: #00f5d4;
-    border: 1px solid rgba(0, 245, 212, 0.35);
-    border-radius: 6px;
-    padding: 0.18rem 0.6rem;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    background: rgba(16, 185, 129, 0.12);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: 4px;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
 }
 
 .dataset-meta {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #cbd5e1;
+    font-size: 0.86rem;
+    font-weight: 400;
+    color: #94a3b8;
 }
 
-/* ─── 9. Tabs ─────────────────────────────────────────────────────────────── */
+/* ─── 9. Clean Navigation Tabs ───────────────────────────────────────────── */
 button[data-baseweb="tab"] {
     background-color: transparent !important;
-    border-radius: 8px 8px 0 0 !important;
-    color: #64748b !important;
-    font-weight: 600 !important;
-    font-size: 0.9rem !important;
-    padding: 0.65rem 1.3rem !important;
-    transition: all 0.2s ease !important;
+    border-radius: 6px 6px 0 0 !important;
+    color: #94a3b8 !important;
+    font-weight: 500 !important;
+    font-size: 0.88rem !important;
+    padding: 0.65rem 1.15rem !important;
+    transition: color 0.15s ease, border-color 0.15s ease !important;
     font-family: 'Inter', sans-serif !important;
+    border-bottom: 2px solid transparent !important;
 }
 
 button[data-baseweb="tab"]:hover {
-    color: #cbd5e1 !important;
-    background-color: rgba(129, 140, 248, 0.06) !important;
+    color: #f1f5f9 !important;
+    background-color: rgba(255, 255, 255, 0.03) !important;
 }
 
 button[data-baseweb="tab"][aria-selected="true"] {
-    color: #00f5d4 !important;
-    font-weight: 700 !important;
-    border-bottom: 2px solid #00f5d4 !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    border-bottom: 2px solid #2563eb !important;
 }
 
-/* ─── 10. Section Header ─────────────────────────────────────────────────── */
+/* ─── 10. Section Headers ────────────────────────────────────────────────── */
 .section-header {
-    font-size: 1.3rem;
-    font-weight: 800;
+    font-size: 1.15rem;
+    font-weight: 700;
     color: #f8fafc;
-    margin: 1.6rem 0 0.85rem 0;
+    margin: 1.4rem 0 0.75rem 0;
     display: flex;
     align-items: center;
-    gap: 0.55rem;
-    letter-spacing: -0.02em;
+    gap: 0.5rem;
+    letter-spacing: -0.01em;
     position: relative;
-    padding-left: 1rem;
+    padding-left: 0.85rem;
 }
 
 .section-header::before {
@@ -417,227 +351,171 @@ button[data-baseweb="tab"][aria-selected="true"] {
     top: 15%;
     height: 70%;
     width: 3px;
-    background: linear-gradient(180deg, #00f5d4, #818cf8);
+    background: #2563eb;
     border-radius: 2px;
 }
 
 /* ─── 11. Insight Cards ──────────────────────────────────────────────────── */
 .insight-card {
-    border-radius: 12px;
-    padding: 1.15rem 1.4rem;
-    margin-bottom: 0.9rem;
-    border: 1px solid rgba(51, 65, 85, 0.6);
-    background: rgba(15, 23, 42, 0.7);
-    backdrop-filter: blur(6px);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.25);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    border: 1px solid #1e293b;
+    background: #0f172a;
+    transition: border-color 0.15s ease;
 }
 
 .insight-card:hover {
-    transform: translateX(4px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    border-color: #334155;
 }
 
 .insight-card.correlation {
-    border-left: 4px solid #f97316;
-    background: rgba(30, 27, 75, 0.45);
+    border-left: 3px solid #f59e0b;
 }
 
 .insight-card.category {
-    border-left: 4px solid #a78bfa;
-    background: rgba(24, 24, 27, 0.65);
+    border-left: 3px solid #2563eb;
 }
 
 .insight-card.anomaly {
-    border-left: 4px solid #ef4444;
-    background: rgba(69, 10, 10, 0.3);
+    border-left: 3px solid #ef4444;
 }
 
 .insight-card.general {
-    border-left: 4px solid #06b6d4;
-    background: rgba(15, 23, 42, 0.65);
+    border-left: 3px solid #0284c7;
 }
 
 .insight-header {
-    font-size: 0.78rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    margin-bottom: 0.4rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.35rem;
     display: flex;
     align-items: center;
     gap: 0.4rem;
 }
 
 .insight-text {
-    font-size: 0.97rem;
-    font-weight: 500;
-    color: #f1f5f9;
+    font-size: 0.92rem;
+    font-weight: 400;
+    color: #cbd5e1;
     margin: 0;
     line-height: 1.5;
 }
 
-/* ─── 12. Action Badges (Cleaning Log) ───────────────────────────────────── */
+/* ─── 12. Action Badges (Cleaning Log & Info Strips) ─────────────────────── */
 .action-badge {
-    background: rgba(15, 23, 42, 0.85);
-    border: 1px solid rgba(0, 245, 212, 0.2);
-    border-left: 4px solid #00f5d4;
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-    margin-bottom: 0.55rem;
-    font-size: 0.92rem;
-    color: #e2e8f0;
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-left: 3px solid #2563eb;
+    border-radius: 6px;
+    padding: 0.7rem 0.9rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.88rem;
+    color: #cbd5e1;
     display: flex;
     align-items: center;
-    gap: 0.55rem;
-    transition: background 0.2s ease;
+    gap: 0.5rem;
 }
 
-.action-badge:hover {
-    background: rgba(0, 245, 212, 0.06);
-}
-
-/* ─── 13. Welcome Card ───────────────────────────────────────────────────── */
+/* ─── 13. Clean Welcome / Empty State ────────────────────────────────────── */
 .welcome-card {
     text-align: center;
-    padding: 3.5rem 2rem;
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(20, 24, 50, 0.8) 100%);
-    border: 1px solid rgba(129, 140, 248, 0.25);
-    border-radius: 20px;
+    padding: 3rem 2rem;
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
     margin-top: 1.5rem;
-    backdrop-filter: blur(10px);
-    position: relative;
-    overflow: hidden;
-}
-
-.welcome-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
-    animation: shimmer 4s infinite;
-}
-
-@keyframes shimmer {
-    0% {
-        left: -100%;
-    }
-
-    100% {
-        left: 200%;
-    }
 }
 
 .welcome-icon {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-    animation: floatIcon 3s ease-in-out infinite;
-}
-
-@keyframes floatIcon {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-8px);
-    }
+    font-size: 2.8rem;
+    margin-bottom: 0.8rem;
+    line-height: 1;
 }
 
 .welcome-title {
-    font-size: 1.8rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    background: linear-gradient(135deg, #ffffff, #a5f3fc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 0.8rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #f8fafc;
+    margin-bottom: 0.6rem;
 }
 
 .welcome-desc {
     color: #94a3b8;
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    margin-bottom: 1.4rem;
 }
 
 .feature-pill-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.55rem;
+    gap: 0.5rem;
     justify-content: center;
     margin-top: 0.5rem;
 }
 
 .feature-pill {
-    background: rgba(79, 70, 229, 0.12);
-    border: 1px solid rgba(129, 140, 248, 0.3);
-    border-radius: 20px;
-    padding: 0.4rem 1rem;
-    font-size: 0.87rem;
-    font-weight: 600;
-    color: #a5b4fc;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #cbd5e1;
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
 }
 
 .check {
-    color: #00f5d4;
-    font-weight: 800;
+    color: #10b981;
+    font-weight: 700;
 }
 
 /* ─── 14. Column Type Pills ──────────────────────────────────────────────── */
 .type-pills-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    padding: 0.5rem 0;
+    gap: 0.45rem;
+    margin-bottom: 0.85rem;
+    padding: 0.4rem 0;
 }
 
 .type-pill {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.28rem 0.75rem;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    transition: transform 0.15s ease;
-}
-
-.type-pill:hover {
-    transform: scale(1.04);
+    gap: 0.35rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 500;
 }
 
 .type-pill.date {
     color: #38bdf8;
-    background: rgba(56, 189, 248, 0.12);
-    border: 1px solid rgba(56, 189, 248, 0.3);
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.25);
 }
 
 .type-pill.numeric {
     color: #34d399;
-    background: rgba(52, 211, 153, 0.12);
-    border: 1px solid rgba(52, 211, 153, 0.3);
+    background: rgba(52, 211, 153, 0.1);
+    border: 1px solid rgba(52, 211, 153, 0.25);
 }
 
 .type-pill.categorical {
-    color: #c084fc;
-    background: rgba(192, 132, 252, 0.12);
-    border: 1px solid rgba(192, 132, 252, 0.3);
+    color: #60a5fa;
+    background: rgba(96, 165, 250, 0.1);
+    border: 1px solid rgba(96, 165, 250, 0.25);
 }
 
 .type-pill.text {
     color: #94a3b8;
-    background: rgba(148, 163, 184, 0.12);
-    border: 1px solid rgba(148, 163, 184, 0.3);
+    background: rgba(148, 163, 184, 0.1);
+    border: 1px solid rgba(148, 163, 184, 0.25);
 }
 
 /* ─── 15. Data Quality Gauge ─────────────────────────────────────────────── */
@@ -645,42 +523,40 @@ button[data-baseweb="tab"][aria-selected="true"] {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1.5rem 1rem;
-    background: rgba(15, 23, 42, 0.7);
-    border: 1px solid rgba(51, 65, 85, 0.7);
-    border-radius: 14px;
-    backdrop-filter: blur(6px);
+    padding: 1.4rem 1rem;
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 10px;
 }
 
 .quality-score-number {
-    font-size: 3.2rem;
-    font-weight: 900;
-    letter-spacing: -0.04em;
+    font-size: 2.8rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
     line-height: 1;
 }
 
 .quality-label-text {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 600;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     margin-top: 0.4rem;
 }
 
 /* ─── 16. Chart Builder Card ─────────────────────────────────────────────── */
 .chart-builder-card {
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(17, 24, 39, 0.85) 100%);
-    border: 1px solid rgba(129, 140, 248, 0.25);
-    border-radius: 14px;
-    padding: 1.4rem 1.6rem;
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 10px;
+    padding: 1.25rem 1.4rem;
     margin-bottom: 1rem;
-    backdrop-filter: blur(8px);
 }
 
-/* ─── 17. Sidebar Styling ────────────────────────────────────────────────── */
+/* ─── 17. Professional Sidebar ──────────────────────────────────────────── */
 [data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #0a0e1a 0%, #0d1221 100%) !important;
-    border-right: 1px solid rgba(129, 140, 248, 0.15) !important;
+    background: #0a0e17 !important;
+    border-right: 1px solid #1e293b !important;
 }
 
 [data-testid="stSidebar"] * {
@@ -688,129 +564,124 @@ button[data-baseweb="tab"][aria-selected="true"] {
 }
 
 [data-testid="stSidebar"] .stMarkdown h3 {
-    background: linear-gradient(135deg, #00f5d4, #818cf8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-size: 1.25rem !important;
-    font-weight: 800 !important;
+    color: #f8fafc !important;
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.01em !important;
 }
 
 [data-testid="stSidebar"] [data-testid="stExpander"] {
-    background: rgba(15, 23, 42, 0.6) !important;
-    border: 1px solid rgba(51, 65, 85, 0.5) !important;
-    border-radius: 10px !important;
+    background: #0f172a !important;
+    border: 1px solid #1e293b !important;
+    border-radius: 8px !important;
 }
 
-/* ─── 18. Expander ───────────────────────────────────────────────────────── */
+/* ─── 18. Expanders ──────────────────────────────────────────────────────── */
 [data-testid="stExpander"] {
-    border: 1px solid rgba(51, 65, 85, 0.6) !important;
-    border-radius: 10px !important;
-    background: rgba(15, 23, 42, 0.5) !important;
+    border: 1px solid #1e293b !important;
+    border-radius: 8px !important;
+    background: #0f172a !important;
 }
 
 [data-testid="stExpanderToggleIcon"] {
-    color: #818cf8 !important;
+    color: #94a3b8 !important;
 }
 
 /* ─── 19. Dataframe / Table ──────────────────────────────────────────────── */
 [data-testid="stDataFrame"] {
-    border-radius: 10px;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
     overflow: hidden;
 }
 
 .stDataFrame iframe {
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
-/* ─── 20. Selectbox & Multiselect ────────────────────────────────────────── */
+/* ─── 20. Form Inputs, Selectbox & Multiselect ───────────────────────────── */
 [data-testid="stSelectbox"]>div>div,
-[data-testid="stMultiSelect"]>div>div {
-    background-color: rgba(15, 23, 42, 0.9) !important;
-    border: 1px solid rgba(51, 65, 85, 0.8) !important;
-    border-radius: 8px !important;
+[data-testid="stMultiSelect"]>div>div,
+[data-testid="stTextInput"]>div>div {
+    background-color: #0b1120 !important;
+    border: 1px solid #334155 !important;
+    border-radius: 6px !important;
     color: #f1f5f9 !important;
 }
 
 [data-testid="stSelectbox"]>div>div:focus-within,
-[data-testid="stMultiSelect"]>div>div:focus-within {
-    border-color: #818cf8 !important;
-    box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.25) !important;
+[data-testid="stMultiSelect"]>div>div:focus-within,
+[data-testid="stTextInput"]>div>div:focus-within {
+    border-color: #2563eb !important;
+    box-shadow: 0 0 0 1px #2563eb !important;
 }
 
-/* ─── 21. Info / Warning / Error boxes ───────────────────────────────────── */
+/* ─── 21. Alert Callouts ─────────────────────────────────────────────────── */
 [data-testid="stAlert"] {
-    border-radius: 10px !important;
-    border-left-width: 4px !important;
+    border-radius: 8px !important;
+    border-left-width: 3px !important;
+    background-color: #0f172a !important;
+    border-color: #1e293b !important;
 }
 
-/* ─── 22. Download button ────────────────────────────────────────────────── */
+/* ─── 22. Download Buttons (Secondary Style) ─────────────────────────────── */
 [data-testid="stDownloadButton"]>button {
-    background: linear-gradient(135deg, rgba(0, 245, 212, 0.15) 0%, rgba(129, 140, 248, 0.15) 100%) !important;
-    border: 1px solid rgba(0, 245, 212, 0.4) !important;
-    color: #00f5d4 !important;
-    font-weight: 700 !important;
-    border-radius: 10px !important;
-    transition: all 0.22s ease !important;
+    background-color: #1e293b !important;
+    background-image: none !important;
+    border: 1px solid #334155 !important;
+    color: #38bdf8 !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease !important;
 }
 
 [data-testid="stDownloadButton"]>button:hover {
-    background: linear-gradient(135deg, rgba(0, 245, 212, 0.25) 0%, rgba(129, 140, 248, 0.25) 100%) !important;
-    box-shadow: 0 0 20px rgba(0, 245, 212, 0.3) !important;
-    transform: translateY(-1px) !important;
+    background-color: #243247 !important;
+    border-color: #0284c7 !important;
+    color: #ffffff !important;
+    transform: none !important;
+    box-shadow: none !important;
 }
 
 [data-testid="stDownloadButton"]>button p,
 [data-testid="stDownloadButton"]>button span {
-    color: #00f5d4 !important;
+    color: inherit !important;
 }
 
 /* ─── 23. Divider ────────────────────────────────────────────────────────── */
 hr {
-    border-color: rgba(51, 65, 85, 0.5) !important;
-    margin: 1.5rem 0 !important;
+    border-color: #1e293b !important;
+    margin: 1.4rem 0 !important;
 }
 
-/* ─── 24. Stat summary row ───────────────────────────────────────────────── */
+/* ─── 24. Stat Summary Row ───────────────────────────────────────────────── */
 .stat-row {
     display: flex;
-    gap: 0.8rem;
+    gap: 0.6rem;
     flex-wrap: wrap;
-    margin-bottom: 1rem;
+    margin-bottom: 0.85rem;
 }
 
 .stat-chip {
-    background: rgba(30, 41, 59, 0.7);
-    border: 1px solid rgba(51, 65, 85, 0.8);
-    border-radius: 8px;
-    padding: 0.35rem 0.85rem;
-    font-size: 0.82rem;
-    font-weight: 600;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 500;
     color: #cbd5e1;
 }
 
 .stat-chip strong {
-    color: #f1f5f9;
+    color: #f8fafc;
 }
 
-/* ─── 25. Fade-in animation for sections ─────────────────────────────────── */
-@keyframes fadeSlideUp {
-    from {
-        opacity: 0;
-        transform: translateY(12px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
+/* ─── 25. Animations & Utilities ─────────────────────────────────────────── */
 .fade-in {
-    animation: fadeSlideUp 0.4s ease both;
+    opacity: 1;
 }
 
-/* ─── 26. Gradient badge row (header area) ───────────────────────────────── */
+/* ─── 26. Professional Badges ────────────────────────────────────────────── */
 .badge-row {
     display: flex;
     gap: 0.5rem;
@@ -819,38 +690,61 @@ hr {
 }
 
 .badge {
-    padding: 0.2rem 0.7rem;
-    border-radius: 20px;
+    padding: 0.2rem 0.65rem;
+    border-radius: 4px;
     font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    display: inline-flex;
+    align-items: center;
+}
+
+.badge-blue {
+    background: rgba(37, 99, 235, 0.12);
+    color: #60a5fa;
+    border: 1px solid rgba(37, 99, 235, 0.3);
 }
 
 .badge-teal {
-    background: rgba(0, 245, 212, 0.15);
-    color: #00f5d4;
-    border: 1px solid rgba(0, 245, 212, 0.3);
+    background: rgba(14, 165, 233, 0.12);
+    color: #38bdf8;
+    border: 1px solid rgba(14, 165, 233, 0.3);
 }
 
-.badge-violet {
-    background: rgba(129, 140, 248, 0.15);
-    color: #a5b4fc;
-    border: 1px solid rgba(129, 140, 248, 0.3);
+.badge-slate {
+    background: rgba(51, 65, 85, 0.4);
+    color: #cbd5e1;
+    border: 1px solid rgba(71, 85, 105, 0.5);
+}
+
+.badge-emerald {
+    background: rgba(16, 185, 129, 0.12);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .badge-amber {
-    background: rgba(251, 191, 36, 0.15);
+    background: rgba(245, 158, 11, 0.12);
     color: #fbbf24;
-    border: 1px solid rgba(251, 191, 36, 0.3);
+    border: 1px solid rgba(245, 158, 11, 0.3);
 }
 
-/* ─── 27. Progress bar override ──────────────────────────────────────────── */
+/* Fallback for badge-violet to ensure no purple is rendered */
+.badge-violet {
+    background: rgba(51, 65, 85, 0.4);
+    color: #cbd5e1;
+    border: 1px solid rgba(71, 85, 105, 0.5);
+}
+
+/* ─── 27. Clean Progress Bar ─────────────────────────────────────────────── */
 [data-testid="stProgress"]>div>div>div>div {
-    background: linear-gradient(90deg, #00f5d4, #818cf8) !important;
+    background-color: #2563eb !important;
+    background-image: none !important;
     border-radius: 4px !important;
 }
 
-/* ─── 28. Radio buttons ──────────────────────────────────────────────────── */
-[data-testid="stRadio"] label {
-    color: #e2e8f0 !important;
+/* ─── 28. Radio & Checkbox Controls ──────────────────────────────────────── */
+[data-testid="stRadio"] label,
+[data-testid="stCheckbox"] label {
+    color: #cbd5e1 !important;
 }
